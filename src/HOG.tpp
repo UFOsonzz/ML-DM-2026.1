@@ -5,7 +5,27 @@
 #include <iterator>
 #include <cmath>
 
-namespace hog {
+class HOG {
+public: 
+    template <std::size_t N, std::size_t M, std::size_t BIN_SIZE>
+    [[nodiscard]] constexpr auto run_hog(const image::RGBImage<N, M>& src) noexcept {
+        const auto                grey_image = image::convert_rgb_to_grey_img<N, M>(src);
+        const auto                grad_image = convert_grey_to_gradient_img<N, M>(grey_image);
+        const auto                histogram  = convert_image_to_histogram<N, M, BIN_SIZE>(grad_image);
+        return block_norm(histogram);
+    }
+
+    static HOG& get_instance() {
+        static HOG instance{};
+        return instance;
+    }
+
+    HOG(HOG&) = delete;
+    HOG& operator=(const HOG&) = delete;
+    HOG(HOG&&) = delete;
+    HOG& operator=(HOG&&) = delete;
+
+private:
     using Magnitude = std::float32_t;
     using Angle = std::float16_t;
     struct GradientVec {
@@ -151,11 +171,7 @@ namespace hog {
         return return_flat_histogram;
     }
 
-    template <std::size_t N, std::size_t M, std::size_t BIN_SIZE>
-    [[nodiscard]] constexpr auto run_hog(const image::RGBImage<N, M>& src) noexcept {
-        const auto                grey_image = image::convert_rgb_to_grey_img<N, M>(src);
-        const auto                grad_image = convert_grey_to_gradient_img<N, M>(grey_image);
-        const auto                histogram  = convert_image_to_histogram<N, M, BIN_SIZE>(grad_image);
-        return block_norm(histogram);
-    }
-}
+    HOG() = default;
+    ~HOG() = default;
+    
+};
