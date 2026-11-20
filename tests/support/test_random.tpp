@@ -1,4 +1,4 @@
-#include "test_random.h"
+#include "test_random.hpp"
 
 namespace random_generator {
     template <std::integral T>

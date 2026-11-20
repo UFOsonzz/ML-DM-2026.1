@@ -1,5 +1,5 @@
-#include "src/HOG.tpp"
-#include "support/test_generate_image.tpp"
+#include "include/HOG.hpp"
+#include "support/test_generate_image.cpp"
 #include <iostream>
 #include <print>
 

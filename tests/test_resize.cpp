@@ -1,6 +1,6 @@
-#include "support/test_random.h"
-#include "include/image.h"
-#include "support/test_generate_image.tpp"
+#include "support/test_random.hpp"
+#include "include/image.hpp"
+#include "support/test_generate_image.cpp"
 #include <print>
 #include <iostream>
 

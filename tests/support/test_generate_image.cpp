@@ -1,5 +1,5 @@
 #include "test_random.tpp"
-#include "include/image.h"
+#include "include/image.hpp"
 
 namespace image_generator {
     template <std::size_t N, std::size_t M>

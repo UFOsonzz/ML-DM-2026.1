@@ -1,4 +1,4 @@
-#include "include/image.h"
+#include "include/image.hpp"
 
 namespace image {
     template <std::size_t New_N, std::size_t New_M, std::size_t Old_N, std::size_t Old_M>

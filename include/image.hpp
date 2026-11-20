@@ -36,4 +36,4 @@ namespace image {
     [[nodiscard]] GreyImage<N, M> convert_rgb_to_grey_img(const RGBImage<N, M>& src) noexcept;
 }
 
-#include "detail/image_processing.tpp"
+#include "detail/image.tpp"
