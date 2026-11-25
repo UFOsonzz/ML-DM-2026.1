@@ -5,18 +5,21 @@ from dotenv import load_dotenv
 from roboflow import Roboflow
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT_DIR = ROOT / "data" / "raw"
-VERSION = 2 
+RAW = ROOT / "data" / "raw"
 
-if not OUT_DIR.exists() or not any(OUT_DIR.iterdir()):
-    load_dotenv(ROOT / ".env")
-    api_key = os.getenv("ROBOFLOW_API_KEY")
-    if not api_key:
-        raise SystemExit("Missing ROBOFLOW_API_KEY in .env")
-    rf = Roboflow(api_key=api_key)
-    project = rf.workspace("data-science-173-msp9r").project("motorcycle-helmet-detection")
-    project.version(VERSION).download("yolov8", location=str(OUT_DIR))
+DATASETS = [
+    ("data-science-173-msp9r", "motorcycle-helmet-detection", 2),
+    ("mapua-university-n7qm7", "motorcycle-helmet-7d2gr", 2),
+]
 
-for split in ("train", "valid", "test"):
-    n_images = len(list((OUT_DIR / split / "images").glob("*")))
-    print(f"{split}: {n_images} images")
+load_dotenv(ROOT / ".env")
+api_key = os.getenv("ROBOFLOW_API_KEY")
+if not api_key:
+    raise SystemExit("Missing ROBOFLOW_API_KEY in .env")
+rf = Roboflow(api_key=api_key)
+
+for workspace, project, version in DATASETS:
+    out_dir = RAW / project
+    if (out_dir / "data.yaml").exists():
+        continue
+    rf.workspace(workspace).project(project).version(version).download("yolov8", location=str(out_dir))
