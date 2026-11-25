@@ -1,2 +1,8 @@
 roboflow
 python-dotenv
+opencv-python 
+pyyaml 
+matplotlib 
+torch 
+torchvision
+ultralytics
